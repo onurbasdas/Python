@@ -3,85 +3,85 @@ import time
 
 class Kumanda():
 
-    def __init__(self,tv_durum = "Kapalı",tv_ses = 0,kanal_listesi = ["Trt"],kanal = "Trt"):
-        self.tv_durum = tv_durum
-        self.tv_ses = tv_ses
-        self.kanal_listesi = kanal_listesi
-        self.kanal = kanal
-    def tv_ac(self):
-        if(self.tv_durum == "Açık"):
-            print("Televizyon zaten açık...")
+    def __init__(self,tv_situation = "Kapalı",tv_volume = 0,channel_list = ["BBC"],channel = "BBC"):
+        self.tv_situation = tv_situation
+        self.tv_volume = tv_volume
+        self.channel_list = channel_list
+        self.channel = channel
+    def tv_open(self):
+        if(self.tv_situation == "Open"):
+            print("TV is already on...")
         else:
-            print("Televizyon açılıyor....")
-            self.tv_durum = "Açık"
-    def tv_kapat(self):
-        if(self.tv_durum == "Kapalı"):
-            print("Televizyon zaten kapalı...")
+            print("Television turns on....")
+            self.tv_situation = "Open"
+    def tv_close(self):
+        if(self.tv_situation == "Close"):
+            print("Television turns off...")
         else:
-            print("Televizyon kapanıyor....")
-        self.tv_durum = "Kapalı"
-    def ses_ayarları(self):
+            print("Television turns off....")
+        self.tv_situation = "Close"
+    def sound_settings(self):
         while True:
-            cevap = input("Sesi azalt: '<\nSesi artır: '>'\nÇıkış: çıkış")
-            if(cevap == "<"):
-                if(self.tv_ses != 0):
-                    self.tv_ses -= 1
-                    print("Ses:",self.tv_ses)
-            elif(cevap == ">"):
-                if(self.tv_ses != 31):
-                    self.tv_ses +=1
-                    print("Ses:",self.tv_ses)
+            response = input("Decrease the sound: '<\nIncrease sound: '>'\nExit: exit")
+            if(response == "<"):
+                if(self.tv_volume != 0):
+                    self.tv_volume -= 1
+                    print("Volume:",self.tv_volume)
+            elif(response == ">"):
+                if(self.tv_volume != 31):
+                    self.tv_volume +=1
+                    print("Volume:",self.tv_volume)
             else:
-                print("Ses güncellendi...",self.tv_ses)
+                print("Sound updated...",self.tv_volume)
                 break
-    def kanal_ekle(self,kanal_ismi):
-        print("Kanal ekleniyor....")
+    def add_channel(self,channel_name):
+        print("Adding channel....")
         time.sleep(1)
-        self.kanal_listesi.append(kanal_ismi)
-        print("Kanal eklendi...")
-    def rastgele_kanal(self):
-        rastgele = random.randint(0,len(self.kanal_listesi)-1)
-        self.kanal = self.kanal_listesi[rastgele]
-        print("Şu anki kanal:",self.kanal)
+        self.channel_list.append(channel_name)
+        print("Channel added...")
+    def random_channel(self):
+        random = random.randint(0,len(self.channel_list)-1)
+        self.channel = self.channel_list[random]
+        print("Current channel:",self.channel)
     def __len__(self):
-        return len(self.kanal_listesi)
+        return len(self.channel_list)
     def __str__(self):
-        return "Tv durumu: {}\nTv ses: {}\nKanal listesi: {}\nŞu anki kanal: {}\n".format(self.tv_durum,self.tv_ses,self.kanal_listesi,self.kanal)
-kumanda = Kumanda()
+        return "Tv situation: {}\nTv volume: {}\nChannel list: {}\nCurrent channel: {}\n".format(self.tv_situation,self.tv_volume,self.channel_list,self.channel)
+command = Command()
 
 print("""
-Televizyon Uygulaması
+Television Program
 
-1.Tv Aç
-2.Tv Kapat
-3.Ses Ayarları
-4.Kanal Ekle
-5.Kanal Sayısını Öğrenme
-6.Rastgele Kanala Geçme
-7.Televizyon Bilgileri
-Çıkmak için q'ya basınız..
+1.Tv On
+2.Tv Off
+3.Sound Option
+4.Add Channel
+5.Learning the Number of Channels
+6.Switch to Random Channel
+7.Television Information
+Press q to exit...
 """)
 while True:
-    işlem = input("İşlemi Seçiniz:")
-    if(işlem == "q"):
-        print("Program sonlandırlıyor..")
+    process = input("Choose Action:")
+    if(process == "q"):
+        print("The program ends..")
         break
-    elif(işlem == "1"):
-        kumanda.tv_ac()
-    elif(işlem == "2"):
-        kumanda.tv_kapat()
-    elif(işlem == "3"):
-        kumanda.ses_ayarları()
-    elif(işlem == "4"):
-        kanal_isimleri = input("Kanal isimlerini ',' ile ayırarak giriniz:")
-        kanal_listesi = kanal_isimleri.split(",")
-        for eklenecekler in kanal_listesi:
-            kumanda.kanal_ekle(eklenecekler)
-    elif(işlem == "5"):
-        print("Kanal Sayısı:",len(kumanda))
-    elif(işlem == "6"):
-        kumanda.rastgele_kanal()
-    elif(işlem == "7"):
-        print(kumanda)
+    elif(process == "1"):
+        command.tv_open()
+    elif(process == "2"):
+        command.tv_off()
+    elif(process == "3"):
+        command.sound_settings()
+    elif(process == "4"):
+        channel_list = input("Enter channel names separated by ',':")
+        channel_list = channel_list.split(",")
+        for will_be_added in channel_list:
+            command.add_channel(will_be_added)
+    elif(process == "5"):
+        print("Number of Channels:",len(command))
+    elif(process == "6"):
+        kumanda.random_channel()
+    elif(process == "7"):
+        print(command)
     else:
-        print("Geçersiz İşlem....")
+        print("Invalid Transaction....")
